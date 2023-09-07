@@ -19,13 +19,13 @@
         $.ajax({
           url:'/api/message',
           type:'POST',
-          data:{
-            'answer': 12345
-          }
+          dataType: 'json'
         })
         // Ajax通信が成功したら発動
         .done( (data) => {
-          $('#name').html(data);
+          var data_stringify = JSON.stringify(data);
+          var data_json = JSON.parse(data_stringify);
+          $('#name').html(data_json[0]["text"]);
         })
         // Ajax通信が失敗したら発動
         .fail( (jqXHR, textStatus, errorThrown) => {
