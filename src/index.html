@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Vanilla JavaScript App</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
 </head>
-
 <body>
     <main>
     <h1>Vanilla JavaScript App</h1>
@@ -15,10 +15,26 @@
     </main>
 
     <script>
-    (async function() {
-        const { text } = await( await fetch(`/api/message`)).json();
-        document.querySelector('#name').textContent = text;
-    }());
+      $(function(){
+        $.ajax({
+          url:'/api/message',
+          type:'POST',
+          data:{
+            'answer': 12345
+          }
+        })
+        // Ajax通信が成功したら発動
+        .done( (data) => {
+          $('#name').html(data);
+        })
+        // Ajax通信が失敗したら発動
+        .fail( (jqXHR, textStatus, errorThrown) => {
+          alert('Ajax通信に失敗しました。');
+          console.log("jqXHR          : " + jqXHR.status); // HTTPステータスを表示
+          console.log("textStatus     : " + textStatus);    // タイムアウト、パースエラーなどのエラー情報を表示
+          console.log("errorThrown    : " + errorThrown.message); // 例外情報を表示
+        })
+      });
     </script>
 </body>
 
