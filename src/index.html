@@ -25,7 +25,7 @@
         .done( (data) => {
           var data_stringify = JSON.stringify(data);
           var data_json = JSON.parse(data_stringify);
-          $('#name').html(data_json[0]["text"]);
+          $('#name').html(data_json["text"]);
         })
         // Ajax通信が失敗したら発動
         .fail( (jqXHR, textStatus, errorThrown) => {
